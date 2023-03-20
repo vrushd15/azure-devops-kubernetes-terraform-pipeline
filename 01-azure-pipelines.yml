@@ -6,8 +6,8 @@
 trigger:
 - master
 
-pool: vrush pool
-  
+pool: 
+  vmImage: ubuntu-latest
 
 steps:
 - script: echo Hello, world!
