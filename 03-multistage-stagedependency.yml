@@ -29,7 +29,7 @@ stages:
     steps:
     - bash: echo This is Dev third job   
 - stage: QADeploy
-  dependsOn: DevDeploy 
+  dependsOn: BuildDeploy
   jobs: 
   - job: QAFirstJob
     steps:
