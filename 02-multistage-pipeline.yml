@@ -43,7 +43,7 @@ stages:
     steps:
     - bash: echo This is Prod first job
   - job: ProdSecondJob
-    dependsOn: QAFirstJob
+    dependsOn: ProdFirstJob
     steps:
     - bash: echo This is Prod second job    
   
