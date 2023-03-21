@@ -1,0 +1,56 @@
+# Starter pipeline
+#multistage and stage dependency
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: BuildDeploy
+  jobs: 
+  - job: FirstJob
+    steps:
+    - bash: echo This is Build first job
+  - job: SecondJob
+    steps:
+    - bash: echo This is Build second job  
+- stage: DevDeploy
+  dependsOn: BuildDeploy
+  jobs: 
+  - job: DevFirstJob
+    steps:
+    - bash: echo This is Dev first job
+  - job: SecondJob
+    steps:
+    - bash: echo This is Dev second job    
+  - job: ThirdJob
+    steps:
+    - bash: echo This is Dev third job   
+- stage: QADeploy
+  dependsOn: DevDeploy 
+  jobs: 
+  - job: QAFirstJob
+    steps:
+    - bash: echo This is QA first job
+  - job: QASecondJob
+    dependsOn: QAFirstJob
+    steps:
+    - bash: echo This is QA second job    
+  - job: ThirdJob
+    dependsOn: QASecondJob
+    steps:
+    - bash: echo This is QA third job   
+- stage: ProdDeploy
+  dependsOn:
+  - DevDeploy
+  - QADeploy
+  jobs: 
+  - job: ProdFirstJob
+    steps:
+    - bash: echo This is Prod first job
+  - job: ProdSecondJob
+    dependsOn: ProdFirstJob
+    steps:
+    - bash: echo This is Prod second job 
